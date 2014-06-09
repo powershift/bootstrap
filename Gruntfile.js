@@ -92,6 +92,7 @@ module.exports = function (grunt) {
       bootstrap: {
         src: [
           'js/transition.js',
+          'js/touch-detection.js',
           'js/alert.js',
           'js/button.js',
           'js/carousel.js',
@@ -201,6 +202,27 @@ module.exports = function (grunt) {
         cwd: 'docs/examples/',
         src: ['**/*.css'],
         dest: 'docs/examples/'
+      }
+    },
+
+    notouch: {
+      options: {
+        selectorPrefix: '.bs-no-touch'
+      },
+      core: {
+        src: '<%= autoprefixer.core.src %>'
+      },
+      theme: {
+        src: '<%= autoprefixer.theme.src %>'
+      },
+      docs: {
+        src: '<%= autoprefixer.docs.src %>'
+      },
+      examples: {
+        expand: true,
+        cwd: 'docs/examples/',
+        src: '<%= autoprefixer.examples.src %>',
+        dest: '<%= autoprefixer.examples.dest %>'
       }
     },
 
@@ -392,6 +414,7 @@ module.exports = function (grunt) {
 
   // These plugins provide necessary tasks.
   require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
+  grunt.loadTasks('./grunt/tasks/');
   require('time-grunt')(grunt);
 
   // Docs HTML validation task
@@ -432,7 +455,7 @@ module.exports = function (grunt) {
 
   // CSS distribution task.
   grunt.registerTask('less-compile', ['less:compileCore', 'less:compileTheme']);
-  grunt.registerTask('dist-css', ['less-compile', 'autoprefixer', 'usebanner', 'csscomb', 'cssmin']);
+  grunt.registerTask('dist-css', ['less-compile', 'autoprefixer', 'notouch', 'usebanner', 'csscomb', 'cssmin']);
 
   // Docs distribution task.
   grunt.registerTask('dist-docs', 'copy:docs');
