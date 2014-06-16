@@ -15,7 +15,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
@@ -54,7 +58,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     $.support.transition = transitionEnd()
   })
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: alert.js v3.1.1
@@ -65,7 +69,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // ALERT CLASS DEFINITION
@@ -147,7 +155,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
   $(document).on('click.bs.alert.data-api', dismiss, Alert.prototype.close)
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: button.js v3.1.1
@@ -158,7 +166,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // BUTTON PUBLIC CLASS DEFINITION
@@ -258,7 +270,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     e.preventDefault()
   })
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: carousel.js v3.1.1
@@ -269,14 +281,18 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // CAROUSEL CLASS DEFINITION
   // =========================
 
   var Carousel = function (element, options) {
-    this.$element    = $(element)
+    this.$element    = $(element).on('keydown.bs.carousel', $.proxy(this.keydown, this))
     this.$indicators = this.$element.find('.carousel-indicators')
     this.options     = options
     this.paused      =
@@ -286,8 +302,8 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     this.$items      = null
 
     this.options.pause == 'hover' && this.$element
-      .on('mouseenter', $.proxy(this.pause, this))
-      .on('mouseleave', $.proxy(this.cycle, this))
+      .on('mouseenter.bs.carousel', $.proxy(this.pause, this))
+      .on('mouseleave.bs.carousel', $.proxy(this.cycle, this))
   }
 
   Carousel.VERSION  = '3.1.1'
@@ -296,6 +312,16 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     interval: 5000,
     pause: 'hover',
     wrap: true
+  }
+
+  Carousel.prototype.keydown = function (e) {
+    switch (e.which) {
+      case 37: this.prev(); break
+      case 39: this.next(); break
+      default: return
+    }
+
+    e.preventDefault()
   }
 
   Carousel.prototype.cycle = function (e) {
@@ -310,16 +336,14 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     return this
   }
 
-  Carousel.prototype.getActiveIndex = function () {
-    this.$active = this.$element.find('.item.active')
-    this.$items  = this.$active.parent().children('.item')
-
-    return this.$items.index(this.$active)
+  Carousel.prototype.getItemIndex = function (item) {
+    this.$items = item.parent().children('.item')
+    return this.$items.index(item || this.$active)
   }
 
   Carousel.prototype.to = function (pos) {
     var that        = this
-    var activeIndex = this.getActiveIndex()
+    var activeIndex = this.getItemIndex(this.$active = this.$element.find('.item.active'))
 
     if (pos > (this.$items.length - 1) || pos < 0) return
 
@@ -381,10 +405,8 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
     if (this.$indicators.length) {
       this.$indicators.find('.active').removeClass('active')
-      this.$element.one('slid.bs.carousel', function () { // yes, "slid"
-        var $nextIndicator = $(that.$indicators.children()[that.getActiveIndex()])
-        $nextIndicator && $nextIndicator.addClass('active')
-      })
+      var $nextIndicator = $(this.$indicators.children()[this.getItemIndex($next)])
+      $nextIndicator && $nextIndicator.addClass('active')
     }
 
     var slidEvent = $.Event('slid.bs.carousel', { relatedTarget: relatedTarget, direction: direction }) // yes, "slid"
@@ -475,7 +497,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     })
   })
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: collapse.js v3.1.1
@@ -486,7 +508,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // COLLAPSE PUBLIC CLASS DEFINITION
@@ -657,7 +683,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     Plugin.call($target, option)
   })
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: dropdown.js v3.1.1
@@ -668,7 +694,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // DROPDOWN CLASS DEFINITION
@@ -809,7 +839,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     .on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle)
     .on('keydown.bs.dropdown.data-api', toggle + ', [role="menu"], [role="listbox"]', Dropdown.prototype.keydown)
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: modal.js v3.1.1
@@ -820,7 +850,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // MODAL CLASS DEFINITION
@@ -1090,7 +1124,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     Plugin.call($target, option, this)
   })
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: tooltip.js v3.1.1
@@ -1102,7 +1136,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // TOOLTIP PUBLIC CLASS DEFINITION
@@ -1548,7 +1586,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     return this
   }
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: popover.js v3.1.1
@@ -1559,7 +1597,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // POPOVER PUBLIC CLASS DEFINITION
@@ -1662,7 +1704,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     return this
   }
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: scrollspy.js v3.1.1
@@ -1673,7 +1715,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // SCROLLSPY CLASS DEFINITION
@@ -1689,6 +1735,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     this.offsets        = []
     this.targets        = []
     this.activeTarget   = null
+    this.scrollHeight   = 0
 
     this.$scrollElement.on('scroll.bs.scrollspy', process)
     this.refresh()
@@ -1699,6 +1746,10 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
   ScrollSpy.DEFAULTS = {
     offset: 10
+  }
+
+  ScrollSpy.prototype.getScrollHeight = function () {
+    return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
   }
 
   ScrollSpy.prototype.refresh = function () {
@@ -1712,6 +1763,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
     this.offsets = []
     this.targets = []
+    this.scrollHeight = this.getScrollHeight()
 
     var self     = this
 
@@ -1736,12 +1788,16 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
   ScrollSpy.prototype.process = function () {
     var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
-    var scrollHeight = this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    var scrollHeight = this.getScrollHeight()
     var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
     var offsets      = this.offsets
     var targets      = this.targets
     var activeTarget = this.activeTarget
     var i
+
+    if (this.scrollHeight != scrollHeight) {
+      this.refresh()
+    }
 
     if (scrollTop >= maxScroll) {
       return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
@@ -1823,7 +1879,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     })
   })
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: tab.js v3.1.1
@@ -1834,7 +1890,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // TAB CLASS DEFINITION
@@ -1952,7 +2012,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     Plugin.call($(this), 'show')
   })
 
-}(jQuery);
+});
 
 /* ========================================================================
  * Bootstrap: affix.js v3.1.1
@@ -1963,7 +2023,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
  * ======================================================================== */
 
 
-+function ($) {
+(function (o_o) {
+  typeof define  === 'function' && define.amd ? define(['jquery'], o_o) :
+  typeof exports === 'object' ? o_o(require('jquery')) : o_o(this.jQuery)
+})(function ($) {
+
   'use strict';
 
   // AFFIX CLASS DEFINITION
@@ -2095,4 +2159,4 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     })
   })
 
-}(jQuery);
+});
