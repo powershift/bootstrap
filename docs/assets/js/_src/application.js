@@ -80,17 +80,18 @@
       selector: '[data-toggle="tooltip"]',
       container: 'body'
     })
+    $('.popover-demo').popover({
+      selector: '[data-toggle="popover"]',
+      container: 'body'
+    })
 
+    // Demos within modals
     $('.tooltip-test').tooltip()
     $('.popover-test').popover()
 
-    $('.bs-docs-navbar').tooltip({
-      selector: 'a[data-toggle="tooltip"]',
-      container: '.bs-docs-navbar .nav'
-    })
-
-    // Default popover demo
+    // Default & dismissible popover demos
     $('.bs-docs-popover').popover()
+    $('.bs-docs-popover-dismiss').popover({ trigger: 'focus' })
 
     // Button state demo
     $('#loading-example-btn').click(function () {
