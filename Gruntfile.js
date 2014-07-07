@@ -315,8 +315,8 @@ module.exports = function (grunt) {
         expand: true,
         cwd: './dist',
         src: [
-          '{css,js}/*.min.*',
-          'css/*.map',
+          'css/*',
+          'js/*',
           'fonts/*'
         ],
         dest: 'docs/dist'
