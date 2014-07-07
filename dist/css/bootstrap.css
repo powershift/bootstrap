@@ -260,6 +260,16 @@ th {
     border: 1px solid #ddd !important;
   }
 }
+/*! Credit: Modernizr v3.0.0-alpha.0 | MIT */
+.bs-touch-test {
+  position: absolute;
+  left: -99px;
+}
+@media (touch-enabled), (-moz-touch-enabled), (-ms-touch-enabled), (-o-touch-enabled), (-webkit-touch-enabled) {
+  .bs-touch-test {
+    top: -99px;
+  }
+}
 @font-face {
   font-family: 'Glyphicons Halflings';
 
@@ -2219,7 +2229,7 @@ table th[class*="col-"] {
 .bs-no-touch .table-hover > tbody > tr > td.warning:hover,
 .bs-no-touch .table-hover > tbody > tr > th.warning:hover,
 .bs-no-touch .table-hover > tbody > tr.warning:hover > td,
-.table-hover > tbody > tr:hover > .warning,
+.bs-no-touch .table-hover > tbody > tr:hover > .warning,
 .bs-no-touch .table-hover > tbody > tr.warning:hover > th {
   background-color: #faf2cc;
 }
@@ -4885,10 +4895,10 @@ a.list-group-item:focus {
 .bs-no-touch .list-group-item.active:hover .list-group-item-heading,
 .list-group-item.active:focus .list-group-item-heading,
 .list-group-item.active .list-group-item-heading > small,
-.list-group-item.active:hover .list-group-item-heading > small,
+.bs-no-touch .list-group-item.active:hover .list-group-item-heading > small,
 .list-group-item.active:focus .list-group-item-heading > small,
 .list-group-item.active .list-group-item-heading > .small,
-.list-group-item.active:hover .list-group-item-heading > .small,
+.bs-no-touch .list-group-item.active:hover .list-group-item-heading > .small,
 .list-group-item.active:focus .list-group-item-heading > .small {
   color: inherit;
 }
